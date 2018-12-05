@@ -1,36 +1,63 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Wyznaczanie przybliżonej wartości liczby Pi metodą Monte Carlo</title>
+		<style>
+			html, body {
+				font: 13px 'Arial', sans-serif;
+				text-align: center;
+			}
+			
+			#canvas > canvas {
+				margin: 20px 0;
+			}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pi approximation using Monte Carlo method</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="p5.min.js"></script>
-  <script src="addons/p5.dom.min.js"></script>
-  <script src="addons/p5.sound.min.js"></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
-  <script src="pi.js"></script>
-</head>
+			#result {
+				font-size: 2em;
+			}
 
-<body>
-  <div id="sketch-holder"></div>
+			#toggler {
+				margin-top: 20px;
+			}
 
-  <div class="eq">
-    π ≈ 4
-    <div class="fraction">
-      <span id="circle" class="fup"></span>
-      <span class="bar">/</span>
-      <span id="square" class="fdn"></span>
-    </div>
-    ≈
-    <span id="approximatePi"></span>
-  </div> </br>
+			.fraction {
+				display: inline-block;
+				vertical-align: middle;
+				margin: 0 0.2em 0.4ex;
+				text-align: center;
+			}
 
-  <div id="pi">π
-    = 3.1415926535897932384626433...</div> </br>
-  <div id="difference"></div> </br>
-  <div id="record"></div> </br>
-</body>
+			.fraction > span {
+				display: block;
+				padding-top: 0.15em;
+			}
 
+			.fraction span.fdn {
+				border-top: thin solid black;
+			}
+
+			.fraction span.bar {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Wyznaczanie przybliżonej wartości liczby Pi metodą Monte Carlo</h2>
+		<div id="canvas"></div>
+		<div id="result">
+			π ≈ 4 &#215;
+			<div class="fraction">
+				<span id="pointsInCircle" class="fup">0</span>
+				<span class="bar">/</span>
+				<span id="pointsInSquare" class="fdn">0</span>
+			</div>
+			≈ <span id="approximatePi">0 (0.00%)</span>
+		</div>
+		<button id="toggler">Start</button>
+		<script src="p5.min.js"></script>
+		<script src="pi.js"></script>
+	</body>
 </html>

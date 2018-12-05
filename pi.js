@@ -1,70 +1,96 @@
-let pointsInSquare = 0;
+let radius = 200;
+let width = 2 * radius;
+let height = 2 * radius;
+
+let iterations = Math.pow(radius, 2);
 let pointsInCircle = 0;
-let r = 200;
-let x;
-let y;
-let approximatePi;
-let pi;
-let circle;
-let square;
-let difference = 0;
-let record;
-let recordPi = 0;
+let pointsInSquare = 0;
 
-function setup() {
-    let canvas = createCanvas(500, 500);
-    canvas.parent('sketch-holder');
-    pi = select('#pi');
-    approximatePi = select('#approximatePi');
-    circle = select('#circle');
-    square = select('#square');
-    record = select('#record');
-    difference = select('#difference');
+let pointsInCircleSpan = document.getElementById('pointsInCircle');
+let pointsInSquareSpan = document.getElementById('pointsInSquare');
+let approximatePiSpan = document.getElementById('approximatePi');
+let toggler = document.getElementById('toggler');
 
-    translate(width / 2, height / 2);
+let isRunning = false;
 
-    noFill();
-    ellipse(0, 0, r * 2, r * 2);
-    rectMode(CENTER);
-    rect(0, 0, r * 2, r * 2);
+function random(min, max) {
+    return Math.random() * (max - min + 1) + min;
 }
 
-function draw() {
-
-    translate(width / 2, height / 2);
-
-    calculatePi(100);
-
-    approximatePi.html(pi);
-    difference.html('Difference: ' + diff);
-    circle.html(pointsInCircle);
-    square.html(pointsInSquare);
+function centerPointer() {
+    translate(radius, radius);
 }
 
-function calculatePi(n) {
+function drawPoints(n) {
     for (let i = 0; i < n; i++) {
-        x = random(-r, r);
-        y = random(-r, r);
+        iterations--;
+        pointsInSquare++;
+        
+        let x = random(-radius, radius);
+        let y = random(-radius, radius);
 
-        ++pointsInSquare;
+        stroke('#f00');
 
-        if (x * x + y * y < r * r) {
-            stroke(0, 255, 0);
-            ++pointsInCircle;
-        } else {
-            stroke(255, 0, 0);
+        if (x * x + y * y <= radius * radius) {
+            pointsInCircle++;
+
+            stroke('#0f0');
         }
 
         point(x, y);
-
-        pi = (4.0 * (pointsInCircle / pointsInSquare));
-
-        let recordDiff = abs(PI - recordPi);
-        diff = abs(PI - pi)
-        if (diff < recordDiff) {
-            recordDiff = diff;
-            recordPi = pi;
-            record.html('Record PI: ' + recordPi);
-        }
     }
+}
+
+function updateResult() {
+    pointsInCircleSpan.innerText = pointsInCircle;
+    pointsInSquareSpan.innerText = pointsInSquare;
+    approximatePiSpan.innerText = (4.0 * (pointsInCircle / pointsInSquare)).toFixed(4) + ' (' + ((Math.abs(3.14159265359 - parseFloat(4.0 * (pointsInCircle / pointsInSquare))) / 3.14159265359) * 100).toFixed(2) + '%)';
+}
+
+toggler.addEventListener('click', function () {
+    toggle();
+});
+
+function toggle() {
+    if (isRunning) {
+        noLoop();
+        toggler.innerText = 'Start';
+    } else {
+        loop();
+        toggler.innerText = 'Stop';
+    }
+
+    isRunning = !isRunning;
+}
+
+function setup() {
+    let canvas = createCanvas(width, height);
+    canvas.parent('canvas');
+
+    centerPointer();
+
+    rectMode(CENTER);
+    fill('#000');
+    rect(0, 0, width, height);
+    
+    stroke('#fff');
+    ellipseMode(CENTER);
+    ellipse(0, 0, width - 1, height - 1);
+}
+
+function draw() {
+    if (!isRunning) {
+        return;
+    }
+
+    if (iterations <= 0) {
+        noLoop();
+        toggler.setAttribute('disabled', 'disabled');
+
+        return;
+    }
+
+    centerPointer();
+    drawPoints(100);
+    updateResult();
 }
