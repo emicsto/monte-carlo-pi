@@ -2,6 +2,7 @@ let radius = 200;
 let width = 2 * radius;
 let height = 2 * radius;
 
+
 let iterations = Math.pow(radius, 2);
 let pointsInCircle = 0;
 let pointsInSquare = 0;
