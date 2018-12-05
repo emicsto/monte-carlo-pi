@@ -10,6 +10,8 @@ let square;
 let difference = 0;
 let record;
 let recordPi = 0;
+let counter = 0;
+
 
 function setup() {
     let canvas = createCanvas(500, 500);
@@ -33,12 +35,18 @@ function draw() {
 
     translate(width / 2, height / 2);
 
-    calculatePi(100);
+    calculatePi(1);
 
     approximatePi.html(pi);
     difference.html('Difference: ' + diff);
     circle.html(pointsInCircle);
     square.html(pointsInSquare);
+
+    counter++;
+
+    if (counter >= 1000){
+        noLoop(); 
+    }
 }
 
 function calculatePi(n) {
