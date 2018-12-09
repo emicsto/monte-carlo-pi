@@ -3,7 +3,7 @@ let width = 2 * radius;
 let height = 2 * radius;
 
 
-let iterations = Math.pow(radius, 2);
+let iterations = 100000;
 let pointsInCircle = 0;
 let pointsInSquare = 0;
 
@@ -92,6 +92,6 @@ function draw() {
     }
 
     centerPointer();
-    drawPoints(100);
+    drawPoints(250);
     updateResult();
 }
