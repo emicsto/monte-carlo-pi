@@ -2,7 +2,6 @@ let radius = 200;
 let width = 2 * radius;
 let height = 2 * radius;
 
-
 let iterations = 100000;
 let pointsInCircle = 0;
 let pointsInSquare = 0;
@@ -32,7 +31,7 @@ function drawPoints(n) {
 
         stroke('#f00');
 
-        if (x * x + y * y <= radius * radius) {
+        if (Math.pow(x, 2) + Math.pow(y, 2) <= Math.pow(radius, 2)) {
             pointsInCircle++;
 
             stroke('#0f0');
@@ -45,7 +44,7 @@ function drawPoints(n) {
 function updateResult() {
     pointsInCircleSpan.innerText = pointsInCircle;
     pointsInSquareSpan.innerText = pointsInSquare;
-    approximatePiSpan.innerText = (4.0 * (pointsInCircle / pointsInSquare)).toFixed(4) + ' (' + ((Math.abs(3.14159265359 - parseFloat(4.0 * (pointsInCircle / pointsInSquare))) / 3.14159265359) * 100).toFixed(2) + '%)';
+    approximatePiSpan.innerText = (4.0 * (pointsInCircle / pointsInSquare)).toFixed(4);
 }
 
 toggler.addEventListener('click', function () {
@@ -92,6 +91,6 @@ function draw() {
     }
 
     centerPointer();
-    drawPoints(250);
+    drawPoints(200);
     updateResult();
 }
